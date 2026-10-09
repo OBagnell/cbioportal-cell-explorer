@@ -74,4 +74,17 @@ describe('AttributionCredit', () => {
     expect(screen.queryByText('Note')).toBeNull()
     expect(screen.getByRole('link', { name: /View collection/ }).getAttribute('href')).toBe('/collections/crc-atlas')
   })
+
+  it('details trigger is a keyboard-operable button', () => {
+    openWith(CRC)
+    const detailsButton = screen.getByRole('button', { name: 'details' })
+    expect(detailsButton.tagName).toBe('BUTTON')
+  })
+
+  it('opens details via keyboard on the button trigger', async () => {
+    openWith(CRC)
+    const detailsButton = screen.getByRole('button', { name: 'details' })
+    fireEvent.click(detailsButton)
+    expect(await screen.findByText(CRC.name)).toBeDefined()
+  })
 })

@@ -18,9 +18,20 @@ const lineStyle: CSSProperties = {
   background: 'rgba(255,255,255,0.9)',
   border: '1px solid #e5e5e5',
   borderRadius: 4,
-  whiteSpace: 'nowrap',
+  display: 'flex',
+  alignItems: 'baseline',
+  gap: '2px',
+}
+
+const labelSpan: CSSProperties = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  minWidth: 0,
+}
+
+const detailsStyles: CSSProperties = {
+  flexShrink: 0,
 }
 
 const rowLabel: CSSProperties = { color: '#888', display: 'inline-block', width: 56 }
@@ -70,22 +81,26 @@ export default function AttributionCredit() {
 
   return (
     <div style={lineStyle}>
-      Data:{' '}
-      {a.publication_citation ? (
-        a.publication_url ? <a href={a.publication_url} {...ext}>{a.publication_citation}</a> : a.publication_citation
-      ) : (
-        <span>{a.name}</span>
-      )}
+      <span style={labelSpan}>
+        Data:{' '}
+        {a.publication_citation ? (
+          a.publication_url ? <a href={a.publication_url} {...ext}>{a.publication_citation}</a> : a.publication_citation
+        ) : (
+          <span>{a.name}</span>
+        )}
+      </span>
       {a.license_name && (
-        <>
+        <span style={detailsStyles}>
           {' · '}
           {a.license_url ? <a href={a.license_url} {...ext}>{a.license_name}</a> : a.license_name}
-        </>
+        </span>
       )}
-      {' · '}
-      <Popover content={<Details a={a} />} trigger="click" placement="topRight">
-        <a role="button" tabIndex={0} style={{ cursor: 'pointer' }}>details</a>
-      </Popover>
+      <span style={detailsStyles}>
+        {' · '}
+        <Popover content={<Details a={a} />} trigger="click" placement="topRight">
+          <button type="button" style={{ border: 'none', background: 'none', padding: 0, font: 'inherit', color: '#1677ff', cursor: 'pointer' }}>details</button>
+        </Popover>
+      </span>
     </div>
   )
 }

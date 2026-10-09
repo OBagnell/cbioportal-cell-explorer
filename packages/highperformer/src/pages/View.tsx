@@ -22,6 +22,7 @@ import SelectionOverlay from '../components/SelectionOverlay'
 import SelectionToolbar from '../components/SelectionToolbar'
 import SummaryPanel from '../components/SummaryPanel'
 import { ChatPanel } from '../chat/ChatPanel'
+import AttributionCredit from '../components/AttributionCredit'
 import { loadDatasets, saveDatasets } from '../utils/datasets'
 
 const { Sider, Content } = Layout
@@ -812,6 +813,7 @@ function Visualization({ deckRef }: { deckRef: React.RefObject<DeckGL | null> })
         layers={layers}
         widgets={WIDGETS}
       />
+      <AttributionCredit />
     </div>
   )
 }

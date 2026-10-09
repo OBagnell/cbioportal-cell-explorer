@@ -85,4 +85,29 @@ describe('Collection page', () => {
     renderAt('a-study')
     await waitFor(() => expect(screen.getByText(/not found/i)).toBeDefined())
   })
+
+  it('shows license, source and note when set', async () => {
+    getMock.mockResolvedValue({
+      data: {
+        ...DETAIL,
+        license_name: 'CC BY 4.0',
+        license_url: 'https://creativecommons.org/licenses/by/4.0/',
+        source_url: 'https://doi.org/10.5281/zenodo.17878122',
+        attribution_note: 'Converted from h5ad to zarr; no other changes.',
+      },
+    })
+    renderAt('a-study')
+    const license = await screen.findByRole('link', { name: 'CC BY 4.0' })
+    expect(license.getAttribute('href')).toBe('https://creativecommons.org/licenses/by/4.0/')
+    expect(screen.getByRole('link', { name: /Source data/ }).getAttribute('href')).toBe('https://doi.org/10.5281/zenodo.17878122')
+    expect(screen.getByText('Converted from h5ad to zarr; no other changes.')).toBeDefined()
+  })
+
+  it('omits license, source and note when unset (older backend)', async () => {
+    getMock.mockResolvedValue({ data: DETAIL })
+    renderAt('a-study')
+    await screen.findByText('A Study')
+    expect(screen.queryByText(/Source data/)).toBeNull()
+    expect(screen.queryByText('CC BY 4.0')).toBeNull()
+  })
 })

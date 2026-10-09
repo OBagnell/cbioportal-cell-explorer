@@ -241,6 +241,23 @@ body {
   border-bottom-color: var(--on-ink);
 }
 
+.ce-attribution {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+
+.ce-license {
+  display: inline-block;
+  padding: 0 7px;
+  border: 1px solid #91caff;
+  border-radius: 9px;
+  font-size: 11px;
+}
+
+.ce-attribution-note {
+  color: #777;
+}
+
 .ce-header-slim .ce-stats {
   margin-top: 32px;
 }

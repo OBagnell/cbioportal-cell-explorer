@@ -19,6 +19,10 @@ interface CollectionDetail {
   publication_citation: string | null
   dataset_count: number
   datasets: CatalogDataset[]
+  license_name?: string | null
+  license_url?: string | null
+  source_url?: string | null
+  attribution_note?: string | null
 }
 
 /**
@@ -153,6 +157,32 @@ export default function Collection() {
             {collection.publication_citation ?? collection.publication_url}
             <span aria-hidden="true"> ↗</span>
           </a>
+        )}
+        {(collection.license_name || collection.source_url || collection.attribution_note) && (
+          <p className="ce-attribution">
+            {collection.license_name &&
+              (collection.license_url ? (
+                <a className="ce-license" href={collection.license_url} target="_blank" rel="noreferrer">
+                  {collection.license_name}
+                </a>
+              ) : (
+                <span className="ce-license">{collection.license_name}</span>
+              ))}
+            {collection.license_name && collection.source_url && ' · '}
+            {collection.source_url && (
+              <a href={collection.source_url} target="_blank" rel="noreferrer">
+                Source data<span aria-hidden="true"> ↗</span>
+              </a>
+            )}
+            {collection.attribution_note && (
+              <>
+                {(collection.license_name || collection.source_url) && ' · '}
+                <span className="ce-attribution-note">
+                  {collection.attribution_note}
+                </span>
+              </>
+            )}
+          </p>
         )}
         <OverviewStats stats={stats} />
       </DetailBand>

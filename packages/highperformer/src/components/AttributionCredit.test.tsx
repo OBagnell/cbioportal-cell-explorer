@@ -1,4 +1,4 @@
-import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { render, screen, cleanup, fireEvent, act } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect, afterEach, vi } from 'vitest'
 
@@ -10,7 +10,10 @@ vi.mock('../workers/universal.worker.ts?worker', () => ({ default: class {} }))
 const { default: useAppStore } = await import('../store/useAppStore')
 const { default: AttributionCredit } = await import('./AttributionCredit')
 
-afterEach(() => cleanup())
+afterEach(() => {
+  cleanup()
+  vi.restoreAllMocks()
+})
 
 const CRC = {
   slug: 'crc-atlas',
@@ -81,10 +84,67 @@ describe('AttributionCredit', () => {
     expect(detailsButton.tagName).toBe('BUTTON')
   })
 
-  it('opens details via keyboard on the button trigger', async () => {
+  it('opens details from the button trigger', async () => {
     openWith(CRC)
     const detailsButton = screen.getByRole('button', { name: 'details' })
     fireEvent.click(detailsButton)
     expect(await screen.findByText(CRC.name)).toBeDefined()
+  })
+
+  it('flips aria-expanded on the trigger when details open', async () => {
+    openWith(CRC)
+    const btn = screen.getByRole('button', { name: 'details' })
+    expect(btn.getAttribute('aria-expanded')).toBe('false')
+    expect(btn.getAttribute('aria-haspopup')).toBe('dialog')
+    fireEvent.click(btn)
+    await screen.findByText(CRC.name)
+    expect(btn.getAttribute('aria-expanded')).toBe('true')
+  })
+
+  it('renders the popover inside the credit line so Tab can reach its links', async () => {
+    openWith(CRC)
+    fireEvent.click(screen.getByRole('button', { name: 'details' }))
+    const link = await screen.findByRole('link', { name: /View collection/ })
+    expect(link.closest('[data-testid="attribution-credit"]')).not.toBeNull()
+  })
+
+  it('lets pointer events through while a selection tool is active', () => {
+    openWith(CRC)
+    const box = screen.getByTestId('attribution-credit')
+    expect(box.style.pointerEvents).not.toBe('none')
+    act(() => useAppStore.setState({ selectionTool: 'lasso' } as any))
+    expect(screen.getByTestId('attribution-credit').style.pointerEvents).toBe('none')
+    act(() => useAppStore.setState({ selectionTool: 'pan' } as any))
+    expect(screen.getByTestId('attribution-credit').style.pointerEvents).not.toBe('none')
+  })
+
+  it('uses one link style for anchors and the details button', () => {
+    openWith(CRC)
+    const a = screen.getByRole('link', { name: 'CC BY 4.0' })
+    const b = screen.getByRole('button', { name: 'details' })
+    expect(a.style.color).toBe(b.style.color)
+    expect(a.style.textDecoration).toBe('none')
+    expect(b.style.textDecoration).toBe('none')
+  })
+
+  it('opens the collection in a new tab when embedded', async () => {
+    vi.spyOn(window, 'top', 'get').mockReturnValue({} as any)
+    openWith(CRC)
+    fireEvent.click(screen.getByRole('button', { name: 'details' }))
+    const link = await screen.findByRole('link', { name: /View collection/ })
+    expect(link.getAttribute('target')).toBe('_blank')
+    expect(link.getAttribute('href')).toBe('/collections/crc-atlas')
+  })
+
+  it('appears once a late catalog arrives', () => {
+    openWith(CRC)
+    act(() => useAppStore.setState({ catalogDatasets: [] } as any))
+    expect(screen.queryByText(/Data:/)).toBeNull()
+    act(() =>
+      useAppStore.setState({
+        catalogDatasets: [{ slug: 'ds', name: 'DS', description: null, is_public: true, url: 'https://cdn/ds.zarr', chat_enabled: false, collection: CRC }],
+      } as any),
+    )
+    expect(screen.getByText(/Data:/)).toBeDefined()
   })
 })

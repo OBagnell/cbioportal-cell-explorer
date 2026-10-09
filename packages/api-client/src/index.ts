@@ -634,6 +634,14 @@ export interface components {
             publication_url: string | null;
             /** Publication Citation */
             publication_citation: string | null;
+            /** License Name */
+            license_name: string | null;
+            /** License Url */
+            license_url: string | null;
+            /** Source Url */
+            source_url: string | null;
+            /** Attribution Note */
+            attribution_note: string | null;
         };
         /** CollectionCreate */
         CollectionCreate: {
@@ -647,6 +655,14 @@ export interface components {
             publication_url?: string | null;
             /** Publication Citation */
             publication_citation?: string | null;
+            /** License Name */
+            license_name?: string | null;
+            /** License Url */
+            license_url?: string | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Attribution Note */
+            attribution_note?: string | null;
         };
         /** CollectionDetail */
         CollectionDetail: {
@@ -660,6 +676,14 @@ export interface components {
             publication_url: string | null;
             /** Publication Citation */
             publication_citation: string | null;
+            /** License Name */
+            license_name: string | null;
+            /** License Url */
+            license_url: string | null;
+            /** Source Url */
+            source_url: string | null;
+            /** Attribution Note */
+            attribution_note: string | null;
             /** Dataset Count */
             dataset_count: number;
             /** Datasets */
@@ -682,6 +706,14 @@ export interface components {
             publication_url: string | null;
             /** Publication Citation */
             publication_citation: string | null;
+            /** License Name */
+            license_name: string | null;
+            /** License Url */
+            license_url: string | null;
+            /** Source Url */
+            source_url: string | null;
+            /** Attribution Note */
+            attribution_note: string | null;
             /** Dataset Count */
             dataset_count: number;
         };
@@ -697,6 +729,14 @@ export interface components {
             publication_url?: string | null;
             /** Publication Citation */
             publication_citation?: string | null;
+            /** License Name */
+            license_name?: string | null;
+            /** License Url */
+            license_url?: string | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Attribution Note */
+            attribution_note?: string | null;
         };
         /** ContextResponse */
         ContextResponse: {
@@ -759,6 +799,18 @@ export interface components {
             slug: string;
             /** Name */
             name: string;
+            /** Publication Citation */
+            publication_citation?: string | null;
+            /** Publication Url */
+            publication_url?: string | null;
+            /** License Name */
+            license_name?: string | null;
+            /** License Url */
+            license_url?: string | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Attribution Note */
+            attribution_note?: string | null;
         };
         /** DatasetCreate */
         DatasetCreate: {

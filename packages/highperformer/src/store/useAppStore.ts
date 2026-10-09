@@ -25,6 +25,7 @@ export interface EmbeddingData {
 }
 
 import type { components } from '@cbioportal-cell-explorer/api-client'
+import type { CollectionAttribution } from '../utils/attribution'
 
 export type BackendInfo = components['schemas']['InfoResponse']
 export type User = components['schemas']['User']
@@ -222,7 +223,7 @@ export interface AppState {
     url: string | null
     chat_enabled: boolean
     default_view?: Record<string, unknown> | null
-    collection?: { slug: string; name: string } | null
+    collection?: CollectionAttribution | null
     /**
      * Store facts the backend harvested. Null until a harvest has succeeded,
      * so the absence of this object means "we don't know", never "zero".

@@ -103,6 +103,13 @@ describe('Collection page', () => {
     expect(screen.getByText('Converted from h5ad to zarr; no other changes.')).toBeDefined()
   })
 
+  it('shows an unlinked license as plain text', async () => {
+    getMock.mockResolvedValue({ data: { ...DETAIL, license_name: 'Custom terms', license_url: null } })
+    renderAt('a-study')
+    const chip = await screen.findByText('Custom terms')
+    expect(chip.closest('a')).toBeNull()
+  })
+
   it('omits license, source and note when unset (older backend)', async () => {
     getMock.mockResolvedValue({ data: DETAIL })
     renderAt('a-study')

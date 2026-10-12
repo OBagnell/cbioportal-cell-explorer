@@ -69,12 +69,14 @@ describe('AttributionCredit', () => {
     expect(screen.getByRole('link', { name: 'CC BY 4.0' })).toBeDefined()
   })
 
-  it('opens details with only the rows that are set', async () => {
-    openWith({ ...CRC, attribution_note: null })
+  it('opens details with cite, license and source, but not the note', async () => {
+    openWith(CRC)
     fireEvent.click(screen.getByText('details'))
     expect(await screen.findByText(CRC.name)).toBeDefined()
     expect(screen.getByText('doi.org/10.5281/zenodo.17878122')).toBeDefined()
+    // The note lives on the collection page only
     expect(screen.queryByText('Note')).toBeNull()
+    expect(screen.queryByText(CRC.attribution_note)).toBeNull()
     expect(screen.getByRole('link', { name: /View collection/ }).getAttribute('href')).toBe('/collections/crc-atlas')
   })
 

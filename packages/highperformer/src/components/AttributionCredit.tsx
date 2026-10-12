@@ -70,12 +70,6 @@ function Details({ a }: { a: CollectionAttribution }) {
           <a style={linkStyle} href={a.source_url} {...ext}>{a.source_url.replace(/^https?:\/\//, '')}</a>
         </div>
       )}
-      {a.attribution_note && (
-        <div>
-          <span style={rowLabel}>Note</span>
-          <span style={{ color: '#555' }}>{a.attribution_note}</span>
-        </div>
-      )}
       <div style={{ marginTop: 4, fontSize: 11 }}>
         <CollectionLink slug={a.slug} />
       </div>

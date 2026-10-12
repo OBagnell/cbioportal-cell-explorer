@@ -241,6 +241,45 @@ body {
   border-bottom-color: var(--on-ink);
 }
 
+.ce-attribution {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--on-ink-muted);
+}
+
+.ce-attribution a {
+  color: var(--on-ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(234, 241, 248, 0.35);
+}
+
+.ce-attribution a:hover,
+.ce-attribution a:focus-visible {
+  border-bottom-color: var(--on-ink);
+}
+
+.ce-license {
+  display: inline-block;
+  padding: 0 7px;
+  border: 1px solid rgba(234, 241, 248, 0.5);
+  border-radius: 9px;
+  font-size: 11px;
+  color: var(--on-ink);
+}
+
+.ce-attribution a.ce-license {
+  border-bottom: 1px solid rgba(234, 241, 248, 0.5);
+}
+
+.ce-attribution a.ce-license:hover,
+.ce-attribution a.ce-license:focus-visible {
+  border-color: var(--on-ink);
+}
+
+.ce-attribution-note {
+  color: var(--on-ink-muted);
+}
+
 .ce-header-slim .ce-stats {
   margin-top: 32px;
 }

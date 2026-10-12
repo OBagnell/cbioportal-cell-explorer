@@ -1,5 +1,16 @@
 # @cbioportal-cell-explorer/highperformer
 
+## 0.9.0
+
+### Minor Changes
+
+- [#317](https://github.com/cBioPortal/cbioportal-cell-explorer/pull/317) [`5ece91f`](https://github.com/cBioPortal/cbioportal-cell-explorer/commit/5ece91f33592dc6b779625803ec86672152b8dcb) Thanks [@hweej](https://github.com/hweej)! - Show dataset attribution: a credit line on the plot (citation, license, details with the source link) for datasets whose collection carries attribution — including datasets opened by direct URL — and license, source and notes on the collection page.
+
+### Patch Changes
+
+- Updated dependencies [[`5ece91f`](https://github.com/cBioPortal/cbioportal-cell-explorer/commit/5ece91f33592dc6b779625803ec86672152b8dcb)]:
+  - @cbioportal-cell-explorer/api-client@0.3.0
+
 ## 0.8.1
 
 ### Patch Changes
